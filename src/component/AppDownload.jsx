@@ -1,8 +1,16 @@
 import Image from "../assets/hometofooter.png"
+import Image2 from "../assets/mobilehome.png"
 export default function AppDownload() {
   return (
     <section className="bg-slate-50 py-20 text-center">
-        <img src={Image} alt="" />
+      <div className="hidden md:block">
+         <img src={Image} alt="" />
+      </div>
+       
+<div className="md:hidden">
+<img src={Image2} alt="" />
+</div>
+        
 {/* 
       <h2 className="text-4xl font-bold">
         Download The App

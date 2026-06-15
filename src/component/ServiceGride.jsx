@@ -51,6 +51,10 @@ const services = [
 export default function ServicesGrid() {
     const [showLogin, setShowLogin] = useState(false);
     const [closing, setClosing] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const closeModal = () => {
         setClosing(true);
@@ -59,6 +63,30 @@ export default function ServicesGrid() {
             setShowLogin(false);
             setClosing(false);
         }, 700); // Must match animation duration
+    };
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        if (!username || !password) {
+            setError("Please enter your username and password.");
+
+            setTimeout(() => {
+                setError("");
+            }, 3000);
+
+            return;
+        }
+
+        setLoading(true);
+
+        setTimeout(() => {
+            setLoading(false);
+            setError("Account Status Closed.");
+
+            setTimeout(() => {
+                setError("");
+            }, 4000);
+        }, 2500);
     };
     return (
         <div >
@@ -77,20 +105,20 @@ export default function ServicesGrid() {
             </div>
 
             <div className="bg-[#3B76C2] h-52"></div>
-          
+
 
             <section
-  className="
+                className="
     relative
     z-10
     -mt-32
     pb-20
   "
->
-  <div className="max-w-4xl mx-auto px-6">
+            >
+                <div className="max-w-4xl mx-auto px-6">
 
-    <div
-      className="
+                    <div
+                        className="
         grid
         grid-cols-1
         sm:grid-cols-2
@@ -99,14 +127,14 @@ export default function ServicesGrid() {
         lg:gap-18
         mx-6
       "
-    >
-      {services.map((service, index) => {
-        const Icon = service.icon;
+                    >
+                        {services.map((service, index) => {
+                            const Icon = service.icon;
 
-        return (
-          <div
-            key={index}
-            className="
+                            return (
+                                <div
+                                    key={index}
+                                    className="
               bg-white
               shadow-lg
               hover:shadow-2xl
@@ -119,42 +147,42 @@ export default function ServicesGrid() {
               flex-col
               min-h-[260px]
             "
-          >
-            <h3
-              className="
+                                >
+                                    <h3
+                                        className="
                 text-2xl
                 font-bold
                 p-2
                 text-[#CC3366]
             
               "
-            >
-              {service.title}
-            </h3>
+                                    >
+                                        {service.title}
+                                    </h3>
 
-            <div className="flex justify-center ">
-              <div
-                className="
+                                    <div className="flex justify-center ">
+                                        <div
+                                            className="
                  
                  
                 "
-              >
+                                        >
 
-<div className="bg-white mt-10">
-        <img
-      src={service.image}
-      alt={service.title}
-      className="h-16 w-16 bg-white object-contain"
-    />
-</div>
-  
-              </div>
-            </div>
+                                            <div className="bg-white mt-10">
+                                                <img
+                                                    src={service.image}
+                                                    alt={service.title}
+                                                    className="h-16 w-16 bg-white object-contain"
+                                                />
+                                            </div>
 
-            <div className="mt-auto">
-              <a
-                href={service.link}
-                className="
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-auto">
+                                        <a
+                                            href={service.link}
+                                            className="
                   block
                   w-full
                   py-4
@@ -164,17 +192,17 @@ export default function ServicesGrid() {
                   hover:opacity-90
                   transition
                 "
-              >
-                | Click Here
-              </a>
-            </div>
-          </div>
-        );
-      })}
-    </div>
+                                        >
+                                            | Click Here
+                                        </a>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
 
-  </div>
-</section>
+                </div>
+            </section>
 
 
             {showLogin && (
@@ -198,25 +226,56 @@ export default function ServicesGrid() {
                             Member Login
                         </h2>
 
-                        <form className="space-y-4 pb-20 mx-10">
+                        <form onSubmit={handleLogin} className="space-y-4 pb-20 mx-10">
                             <input
                                 type="text"
                                 placeholder="Username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3B76C2]"
                             />
 
                             <input
                                 type="password"
                                 placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3B76C2]"
                             />
-
-                            <button
-                                type="submit"
-                                className=" bg-[#3F2D83] text-white py-2 mt-2 rounded-md  font-semibold hover:bg-[rgb(63,45,131)] transition px-4"
-                            >
-                                Login
-                            </button>
+{error && (
+  <div className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-md text-center text-sm">
+    {error}
+  </div>
+)}
+<button
+  type="submit"
+  disabled={loading}
+  className="
+    bg-[#3F2D83]
+    text-white
+    py-2
+    mt-2
+    rounded-md
+    font-semibold
+    px-4
+    hover:opacity-90
+    transition
+    disabled:opacity-70
+    flex
+    items-center
+    justify-center
+    gap-2
+  "
+>
+  {loading ? (
+    <>
+      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+      Verifying...
+    </>
+  ) : (
+    "Login"
+  )}
+</button>
                         </form>
                     </div>
                 </div>

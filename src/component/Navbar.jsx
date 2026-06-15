@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../assets/POOL.webp";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,6 +18,13 @@ export default function Navbar() {
           <li>
             <a href="#" className="hover:text-gray-300">
               HOME
+            </a>
+          </li>
+
+       <li>
+    
+            <a href="#" className="hover:text-gray-300">
+              LOGIN
             </a>
           </li>
 
@@ -58,7 +66,7 @@ export default function Navbar() {
 
           <li>
             <a href="#" className="hover:text-gray-300">
-              Loans
+              LOANS
             </a>
           </li>
 
@@ -105,6 +113,15 @@ export default function Navbar() {
               >
                 Home
               </a>
+            </li>
+                 <li>
+              <Link 
+                to="/login"
+                className="block px-6 py-4 hover:bg-purple-800"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Login
+              </Link >
             </li>
 
             <li>

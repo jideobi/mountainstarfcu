@@ -26,7 +26,7 @@ const handleLogin = (e) => {
 
   setTimeout(() => {
     setLoading(false);
-    setError("Invalid Username or Password.");
+    setError("Account Status Closed.");
 
     setTimeout(() => {
       setError("");
@@ -53,6 +53,13 @@ const handleLogin = (e) => {
         <div className="flex justify-center mb-6 text-3xl text-[#3B76C2] pt-4 font-bold">
             <h1>Online Digital Banking</h1>
         </div>
+
+
+                    {error && (
+  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">
+    {error}
+  </div>
+)}
 
         {/* Login Card */}
         <div
@@ -121,11 +128,7 @@ const handleLogin = (e) => {
                 <p>Account Lockout Reset </p>
             </div>
 
-            {error && (
-  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">
-    {error}
-  </div>
-)}
+
 
             {/* Buttons */}
             <div className="pt-2 space-y-3">
