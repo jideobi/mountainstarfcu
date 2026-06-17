@@ -13,7 +13,8 @@ export default function LoginForm() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [showProcessing, setShowProcessing] = useState(false);
+  const [showAccountClosed, setShowAccountClosed] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,14 +31,24 @@ export default function LoginForm() {
       return;
     }
 
-    setLoading(true);
+    // Show processing modal
+    setShowProcessing(true);
 
     setTimeout(() => {
-      setLoading(false);
-      setError("Account Status Closed.");
+      // Hide processing modal
+      setShowProcessing(false);
+
+      // Show account closed page/modal
+      setShowAccountClosed(true);
 
       setTimeout(() => {
-        setError("");
+        // Hide account closed page
+        setShowAccountClosed(false);
+
+        // Clear form
+        setUsername("");
+        setPassword("");
+        setShowPassword(false);
       }, 4000);
     }, 2500);
   };
@@ -109,18 +120,18 @@ export default function LoginForm() {
 
             {/* Password */}
             {/* Password */}
-<div>
-  <label className="block text-gray-700 font-medium mb-2">
-    Password
-  </label>
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">
+                Password
+              </label>
 
-  <div className="relative">
-    <input
-      type={showPassword ? "text" : "password"}
-      placeholder="Password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      className="
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="
         w-full
         px-4
         py-3
@@ -132,12 +143,12 @@ export default function LoginForm() {
         focus:ring-2
         focus:ring-[#3B76C2]
       "
-    />
+                />
 
-    <button
-      type="button"
-      onClick={() => setShowPassword(!showPassword)}
-      className="
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="
         absolute
         right-4
         top-1/2
@@ -145,15 +156,15 @@ export default function LoginForm() {
         text-gray-500
         hover:text-[#3B76C2]
       "
-    >
-      {showPassword ? (
-        <FaEyeSlash size={18} />
-      ) : (
-        <FaEye size={18} />
-      )}
-    </button>
-  </div>
-</div>
+                >
+                  {showPassword ? (
+                    <FaEyeSlash size={18} />
+                  ) : (
+                    <FaEye size={18} />
+                  )}
+                </button>
+              </div>
+            </div>
 
             <div className="text-right">
               <p>Forgot User ID /Password? </p>
@@ -164,10 +175,9 @@ export default function LoginForm() {
 
             {/* Buttons */}
             <div className="pt-2 space-y-3">
-              <button
-                type="submit"
-                disabled={loading}
-                className="
+<button
+  type="submit"
+  className="
     w-full
     bg-[#3B76C2]
     text-white
@@ -176,22 +186,10 @@ export default function LoginForm() {
     font-bold
     hover:opacity-90
     transition
-    disabled:opacity-70
-    flex
-    items-center
-    justify-center
-    gap-3
   "
-              >
-                {loading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Verifying...
-                  </>
-                ) : (
-                  "Login"
-                )}
-              </button>
+>
+  Login
+</button>
 
               <button
                 type="button"
@@ -242,6 +240,31 @@ export default function LoginForm() {
         </div>
 
       </div>
+      {showProcessing && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="bg-white rounded-xl py-64 px-22 mx-4 shadow-xl flex flex-col items-center">
+      <div className="w-16 h-16 border-4 border-[#3B76C2] border-t-transparent rounded-full animate-spin mb-4"></div>
+
+      <p className="text-gray-700 font-medium">
+        Processing, please wait...
+      </p>
+    </div>
+  </div>
+)}
+
+{showAccountClosed && (
+  <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
+    <div className="text-center px-6">
+      <div className="text-red-600 text-3xl font-bold mb-4">
+        Account Status Closed
+      </div>
+
+      <p className="text-gray-700 text-lg">
+        You cannot access this service at the moment.
+      </p>
+    </div>
+  </div>
+)}
     </div>
   );
 }
