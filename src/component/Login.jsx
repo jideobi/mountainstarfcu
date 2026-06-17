@@ -1,65 +1,73 @@
 import Logo from "../assets/logo.v6.large.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import {
+  FaGlobe,
+  FaPhoneAlt,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+
 
 export default function LoginForm() {
 
-const [username, setUsername] = useState("");
-const [password, setPassword] = useState("");
-const [loading, setLoading] = useState(false);
-const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-const handleLogin = (e) => {
-  e.preventDefault();
+  const handleLogin = (e) => {
+    e.preventDefault();
 
-  if (!username || !password) {
-    setError("Please enter your username and password.");
-    
-    setTimeout(() => {
-      setError("");
-    }, 3000);
+    if (!username || !password) {
+      setError("Please enter your username and password.");
 
-    return;
-  }
+      setTimeout(() => {
+        setError("");
+      }, 3000);
 
-  setLoading(true);
+      return;
+    }
 
-  setTimeout(() => {
-    setLoading(false);
-    setError("Account Status Closed.");
+    setLoading(true);
 
     setTimeout(() => {
-      setError("");
-    }, 4000);
-  }, 2500);
-};
+      setLoading(false);
+      setError("Account Status Closed.");
+
+      setTimeout(() => {
+        setError("");
+      }, 4000);
+    }, 2500);
+  };
 
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
-        
+
         {/* Logo */}
-<div className="flex justify-center mb-6">
-  <Link to="/">
-    <img
-      src={Logo}
-      alt="Company Logo"
-      className="w-48 md:w-56 h-auto cursor-pointer hover:opacity-90 transition"
-    />
-  </Link>
-</div>
+        <div className="flex justify-center mb-6">
+          <Link to="/">
+            <img
+              src={Logo}
+              alt="Company Logo"
+              className="w-48 md:w-56 h-auto cursor-pointer hover:opacity-90 transition"
+            />
+          </Link>
+        </div>
 
         <div className="flex justify-center mb-6 text-3xl text-[#3B76C2] pt-4 font-bold">
-            <h1>Online Digital Banking</h1>
+          <h1>Online Digital Banking</h1>
         </div>
 
 
-                    {error && (
-  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">
-    {error}
-  </div>
-)}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">
+            {error}
+          </div>
+        )}
 
         {/* Login Card */}
         <div
@@ -70,7 +78,7 @@ const handleLogin = (e) => {
           "
         >
           <h2 className="text-3xl font-bold text-center text-[rgb(63,45,131)] mb-8">
-         
+
           </h2>
 
           <form onSubmit={handleLogin} className="space-y-5">
@@ -80,12 +88,12 @@ const handleLogin = (e) => {
                 Username
               </label>
 
-         <input
-  type="text"
-  placeholder="Enter Username"
-  value={username}
-  onChange={(e) => setUsername(e.target.value)}
-  className="
+              <input
+                type="text"
+                placeholder="User ID"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="
     w-full
     px-4
     py-3
@@ -96,46 +104,70 @@ const handleLogin = (e) => {
     focus:ring-2
     focus:ring-[#3B76C2]
   "
-/>
+              />
             </div>
 
             {/* Password */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Password
-              </label>
+            {/* Password */}
+<div>
+  <label className="block text-gray-700 font-medium mb-2">
+    Password
+  </label>
 
-<input
-  type="password"
-  placeholder="Enter Password"
-  value={password}
-  onChange={(e) => setPassword(e.target.value)}
-  className="
-    w-full
-    px-4
-    py-3
-    border
-    border-gray-300
-    rounded-lg
-    focus:outline-none
-    focus:ring-2
-    focus:ring-[#3B76C2]
-  "
-/>
-            </div>
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className="
+        w-full
+        px-4
+        py-3
+        pr-12
+        border
+        border-gray-300
+        rounded-lg
+        focus:outline-none
+        focus:ring-2
+        focus:ring-[#3B76C2]
+      "
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="
+        absolute
+        right-4
+        top-1/2
+        -translate-y-1/2
+        text-gray-500
+        hover:text-[#3B76C2]
+      "
+    >
+      {showPassword ? (
+        <FaEyeSlash size={18} />
+      ) : (
+        <FaEye size={18} />
+      )}
+    </button>
+  </div>
+</div>
+
             <div className="text-right">
-                <p>Forgot User ID /Password? </p>
-                <p>Account Lockout Reset </p>
+              <p>Forgot User ID /Password? </p>
+              <p>Account Lockout Reset </p>
             </div>
 
 
 
             {/* Buttons */}
             <div className="pt-2 space-y-3">
-<button
-  type="submit"
-  disabled={loading}
-  className="
+              <button
+                type="submit"
+                disabled={loading}
+                className="
     w-full
     bg-[#3B76C2]
     text-white
@@ -150,16 +182,16 @@ const handleLogin = (e) => {
     justify-center
     gap-3
   "
->
-  {loading ? (
-    <>
-      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-      Verifying...
-    </>
-  ) : (
-    "Login"
-  )}
-</button>
+              >
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Verifying...
+                  </>
+                ) : (
+                  "Login"
+                )}
+              </button>
 
               <button
                 type="button"
@@ -182,6 +214,31 @@ const handleLogin = (e) => {
               </button>
             </div>
           </form>
+        </div>
+        <div className="flex justify-center items-center gap-12 text-gray-700 mt-6">
+          <Link
+            to="/"
+            className="items-center gap-2 cursor-pointer hover:text-[#3B76C2] transition"
+          >
+            <div className="flex justify-center text-[#3B76C2]">
+              <FaPhoneAlt size={20} />
+            </div>
+
+            <span className="text-[16px] text-gray-400 font-medium">Contact Us</span>
+          </Link>
+
+          <div>|</div>
+
+          <Link
+            to="/"
+            className="items-center gap-2 cursor-pointer hover:text-[#3B76C2] transition"
+          >
+            <div className="flex justify-center text-[#3B76C2]">
+              <FaGlobe size={20} />
+            </div>
+
+            <span className="text-[16px] text-gray-400 font-medium">Disclosures</span>
+          </Link>
         </div>
 
       </div>
