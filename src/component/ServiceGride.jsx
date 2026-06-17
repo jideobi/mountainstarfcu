@@ -227,17 +227,18 @@ export default function ServicesGrid() {
                         </h2>
 
                         <form onSubmit={handleLogin} className="space-y-4 pb-20 mx-10">
+                            Username
                             <input
                                 type="text"
-                                placeholder="Username"
+                            
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3B76C2]"
                             />
-
+                            Password
                             <input
                                 type="password"
-                                placeholder="Password"
+                               
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3B76C2]"
